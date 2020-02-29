@@ -14,7 +14,8 @@
   "author": "Abhishek KUmar",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "joi": "^14.3.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
