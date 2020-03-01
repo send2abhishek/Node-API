@@ -1,9 +1,25 @@
 const express = require("express");
 const Joi = require("joi");
 const app = express();
+const morgan = require("morgan");
+const config = require("config");
 
 // enabling json body
+// built middleware function
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+console.log("Application name", config.get("name"));
+console.log("Application password", process.env.app_password);
+
+if (
+  process.env.NODE_ENV === "development" ||
+  app.get("env") === "development"
+) {
+  // middleware for logging http requests
+  app.use(morgan("dev"));
+  console.log(`Enviroment of the application ${app.get("env")}`);
+}
 
 const courses = [
   { id: 1, name: "Course 1" },
@@ -14,12 +30,6 @@ const courses = [
   { id: 6, name: "Course 6" },
   { id: 7, name: "Course 7" }
 ];
-
-app.get("/", (req, res) => {
-  res.status(203).json({
-    msg: "laura"
-  });
-});
 
 app.get("/api/courses/", (req, res) => {
   res.status(200).json(courses);
