@@ -2,5 +2,8 @@
   "name": "Express App demo development",
   "mail": {
     "host": "dev-mail-server"
-  }
+  },
+  "dburl": "mongodb+srv://send2abhishek:aryan@cluster0-orw7v.mongodb.net/course",
+  "dbconnectMsg": "Db connected",
+  "dbConnectError": "error in connecting db"
 }

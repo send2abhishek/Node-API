@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const courseAction = require("./CourseAction");
 const courses = [
   { id: 1, name: "Course 1" },
   { id: 2, name: "Course 2" },
@@ -20,19 +21,20 @@ const getParticularCourse = (req, res) => {
     : res.status(404).json({ error: "Course not found" });
 };
 
-const newCourse = (req, res) => {
-  const { error } = validateError(req.body);
-  if (error) {
-    res.status(400).json({ err: error.details[0].message });
-    return;
-  }
+const newCourse = async (req, res) => {
+  const { result, success } = await courseAction.courseNew(req.body);
 
-  const course = {
-    id: courses.length + 1,
-    name: req.body.name
-  };
-  courses.push(course);
-  res.status(201).json({ msg: "Course created", course });
+  if (result && success) {
+    res.status(201).json({
+      message: "result saved",
+      result: result
+    });
+  } else {
+    res.status(500).json({
+      message: "Something Went Wrong",
+      info: result.message
+    });
+  }
 };
 
 const updateCourse = (req, res) => {
